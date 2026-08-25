@@ -2,6 +2,7 @@
 
 #include "ClockMath.h"
 #include "Win32Helpers.h"
+#include "../resources/resource.h"
 
 #include <shellapi.h>
 
@@ -75,7 +76,7 @@ void WidgetWindow::Create() {
     windowClass.lpfnWndProc = WindowProc;
     windowClass.hInstance = instance_;
     windowClass.hCursor = LoadCursorW(nullptr, IDC_SIZEALL);
-    windowClass.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
+    windowClass.hIcon = LoadIconW(instance_, MAKEINTRESOURCEW(IDI_CLOCK));
     windowClass.hIconSm = windowClass.hIcon;
     windowClass.lpszClassName = kWindowClass;
     CheckWin32(RegisterClassExW(&windowClass) != 0, "RegisterClassExW");
@@ -305,7 +306,7 @@ void WidgetWindow::AddTrayIcon() {
     data.uID = kTrayId;
     data.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP | NIF_SHOWTIP;
     data.uCallbackMessage = kTrayMessage;
-    data.hIcon = LoadIconW(nullptr, IDI_APPLICATION);
+    data.hIcon = LoadIconW(instance_, MAKEINTRESOURCEW(IDI_CLOCK));
     wcscpy_s(data.szTip, kWindowTitle);
     CheckWin32(Shell_NotifyIconW(NIM_ADD, &data), "Shell_NotifyIconW(NIM_ADD)");
     data.uVersion = NOTIFYICON_VERSION_4;
